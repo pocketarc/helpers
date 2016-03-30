@@ -21,3 +21,24 @@ function array_reset($arr) {
 function array_end($arr) {
     return end($arr);
 }
+
+/**
+ * Remove a directory even if it's not empty.
+ *
+ * @param string $dir
+ */
+function rrmdir($dir) {
+    if (is_dir($dir)) {
+        $objects = scandir($dir);
+        foreach ($objects as $object) {
+            if ($object != "." && $object != "..") {
+                if (filetype($dir . "/" . $object) == "dir")
+                    rrmdir($dir . "/" . $object);
+                else
+                    unlink($dir . "/" . $object);
+            }
+        }
+        reset($objects);
+        rmdir($dir);
+    }
+}
