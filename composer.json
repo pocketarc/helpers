@@ -1,0 +1,23 @@
+{
+    "name": "brunodebarros/helpers",
+    "type": "library",
+    "description": "A set of code snippets, helper functions and libraries for reuse across projects.",
+    "keywords": [ ],
+    "homepage": "https://github.com/brunodebarros/helpers",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Bruno De Barros",
+            "email": "bruno@terraduo.com"
+        }
+    ],
+    "require": {
+        "nesbot/carbon": "1.*",
+        "php": ">=5.4"
+    },
+    "autoload": {
+        "files": [
+            "functions.php"
+        ]
+    }
+}
