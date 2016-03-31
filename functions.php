@@ -32,13 +32,54 @@ function rrmdir($dir) {
         $objects = scandir($dir);
         foreach ($objects as $object) {
             if ($object != "." && $object != "..") {
-                if (filetype($dir . "/" . $object) == "dir")
-                    rrmdir($dir . "/" . $object);
+                if (filetype($dir . DIRECTORY_SEPARATOR . $object) == "dir")
+                    rrmdir($dir . DIRECTORY_SEPARATOR . $object);
                 else
-                    unlink($dir . "/" . $object);
+                    unlink($dir . DIRECTORY_SEPARATOR . $object);
             }
         }
         reset($objects);
         rmdir($dir);
+    }
+}
+
+/**
+ * Runs a command and handles its output in real-time, line-by-line.
+ * $callback is called for each line of output.
+ * If $cwd is not provided, will use the working dir of the current PHP process.
+ *
+ * @param string   $cmd
+ * @param callable $callback
+ * @param string   $cwd
+ *
+ * @return array with two keys: exit_code and output.
+ */
+function run($cmd, $callback, $cwd = null) {
+    $pipes = [];
+    $output = "";
+    $descriptor_spec = array(
+        0 => array("pipe", "r"),  // stdin is a pipe that the child will read from
+        1 => array("pipe", "w"),  // stdout is a pipe that the child will write to
+    );
+    $process = proc_open("$cmd 2>&1", $descriptor_spec, $pipes, $cwd);
+    fclose($pipes[0]);
+    stream_set_blocking($pipes[1], 0);
+
+    while (true) {
+        $status = proc_get_status($process);
+        if ($status['running']) {
+            # Handle pipe output.
+            $result = fgets($pipes[1]);
+            if ($result !== false && !empty(trim($result))) {
+                $output .= $result;
+                call_user_func($callback, trim($result));
+            }
+        } else {
+            # Exit the function.
+            return [
+                "exit_code" => $status['exitcode'],
+                "output" => $output,
+            ];
+        }
     }
 }
