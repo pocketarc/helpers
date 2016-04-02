@@ -67,14 +67,16 @@ function run($cmd, $callback, $cwd = null) {
 
     while (true) {
         $status = proc_get_status($process);
-        if ($status['running']) {
-            # Handle pipe output.
+
+        # Handle pipe output.
+        $result = fgets($pipes[1]);
+        while (!empty(trim($result))) {
+            $output .= $result;
+            call_user_func($callback, trim($result));
             $result = fgets($pipes[1]);
-            if ($result !== false && !empty(trim($result))) {
-                $output .= $result;
-                call_user_func($callback, trim($result));
-            }
-        } else {
+        }
+
+        if (!$status['running']) {
             # Exit the function.
             return [
                 "exit_code" => $status['exitcode'],
