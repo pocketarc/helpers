@@ -54,7 +54,7 @@ function rrmdir($dir) {
  *
  * @return array with two keys: exit_code and output.
  */
-function run($cmd, $callback, $cwd = null) {
+function run($cmd, $callback = null, $cwd = null) {
     $pipes = [];
     $output = "";
     $descriptor_spec = array(
@@ -72,7 +72,9 @@ function run($cmd, $callback, $cwd = null) {
         $result = fgets($pipes[1]);
         while (!empty(trim($result))) {
             $output .= $result;
-            call_user_func($callback, trim($result));
+            if ($callback) {
+                call_user_func($callback, trim($result));
+            }
             $result = fgets($pipes[1]);
         }
 
