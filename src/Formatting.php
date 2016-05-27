@@ -7,7 +7,6 @@ namespace Brunodebarros\Helpers;
  *
  * @package Brunodebarros\Helpers
  * @author  Bruno De Barros <bruno@terraduo.com>
- * @internal
  */
 class Formatting {
 
