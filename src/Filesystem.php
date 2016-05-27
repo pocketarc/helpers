@@ -21,10 +21,12 @@ class Filesystem {
             $objects = scandir($dir);
             foreach ($objects as $object) {
                 if ($object != "." && $object != "..") {
-                    if (filetype($dir . DIRECTORY_SEPARATOR . $object) == "dir")
-                        rrmdir($dir . DIRECTORY_SEPARATOR . $object);
-                    else
+                    if (filetype($dir . DIRECTORY_SEPARATOR . $object) == "dir") {
+                        self::rrmdir($dir . DIRECTORY_SEPARATOR . $object);
+                    } else {
+                        chmod($dir . DIRECTORY_SEPARATOR . $object, 0777);
                         unlink($dir . DIRECTORY_SEPARATOR . $object);
+                    }
                 }
             }
             reset($objects);
