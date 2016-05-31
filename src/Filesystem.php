@@ -29,6 +29,7 @@ class Filesystem {
                 }
             }
             reset($objects);
+            chmod($dir, 0777);
             rmdir($dir);
         }
     }
