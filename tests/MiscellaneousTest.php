@@ -10,6 +10,7 @@ class MiscellaneousTest extends PHPUnit_Framework_TestCase
         $attempts = 0;
         $test = function () use (&$attempts) {
             $attempts = $attempts + 1;
+
             return true;
         };
 
@@ -24,12 +25,12 @@ class MiscellaneousTest extends PHPUnit_Framework_TestCase
         $attempts = 0;
         $test = function () use (&$attempts) {
             $attempts = $attempts + 1;
-            throw new Exception("Test Exception!", $attempts);
+            throw new Exception('Test Exception!', $attempts);
         };
 
         $result = Brunodebarros\Helpers\Miscellaneous::multiTry($test, 3, 100);
 
-        self::assertInstanceOf("\\Exception", $result);
+        self::assertInstanceOf('\\Exception', $result);
         self::assertEquals(3, $result->getCode());
         self::assertEquals(3, $attempts);
     }
@@ -40,7 +41,7 @@ class MiscellaneousTest extends PHPUnit_Framework_TestCase
         $test = function () use (&$attempts) {
             $attempts = $attempts + 1;
             if ($attempts < 3) {
-                throw new Exception("Test Exception!", $attempts);
+                throw new Exception('Test Exception!', $attempts);
             } else {
                 return true;
             }
