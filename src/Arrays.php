@@ -5,11 +5,10 @@ namespace Brunodebarros\Helpers;
 /**
  * Helper functions for dealing with arrays.
  *
- * @package Brunodebarros\Helpers
  * @author  Bruno De Barros <bruno@terraduo.com>
  */
-class Arrays {
-
+class Arrays
+{
     /**
      * Does the same as reset(), without the "Only variables should be passed by reference" error.
      *
@@ -17,7 +16,8 @@ class Arrays {
      *
      * @return mixed
      */
-    public static function reset($arr) {
+    public static function reset($arr)
+    {
         return reset($arr);
     }
 
@@ -28,8 +28,8 @@ class Arrays {
      *
      * @return mixed
      */
-    public static function end($arr) {
+    public static function end($arr)
+    {
         return end($arr);
     }
-
 }

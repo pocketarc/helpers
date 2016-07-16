@@ -5,11 +5,10 @@ namespace Brunodebarros\Helpers;
 /**
  * Helper functions for running and processing system commands.
  *
- * @package Brunodebarros\Helpers
  * @author  Bruno De Barros <bruno@terraduo.com>
  */
-class System {
-
+class System
+{
     /**
      * Runs a command and handles its output in real-time, line-by-line.
      * $callback is called for each line of output.
@@ -21,23 +20,25 @@ class System {
      *
      * @return array with two keys: exit_code and output.
      */
-    public static function run($cmd, $callback = null, $cwd = null) {
+    public static function run($cmd, $callback = null, $cwd = null)
+    {
         $pipes = [];
-        $output = "";
-        $descriptor_spec = array(
-            0 => array("pipe", "r"),  // stdin is a pipe that the child will read from
-            1 => array("pipe", "w"),  // stdout is a pipe that the child will write to
-        );
+        $output = '';
+        $descriptor_spec = [
+            0 => ['pipe', 'r'],  // stdin is a pipe that the child will read from
+            1 => ['pipe', 'w'],  // stdout is a pipe that the child will write to
+        ];
         $process = proc_open("$cmd 2>&1", $descriptor_spec, $pipes, $cwd);
         fclose($pipes[0]);
         stream_set_blocking($pipes[1], 0);
 
-        while (true) {
-            $status = proc_get_status($process);
+        $status = proc_get_status($process);
 
+        while (true) {
             # Handle pipe output.
             $result = fgets($pipes[1]);
-            while (!empty(trim($result))) {
+            $result = trim($result);
+            while (!empty($result)) {
                 $output .= $result;
                 if ($callback) {
                     call_user_func($callback, trim($result));
@@ -46,13 +47,16 @@ class System {
             }
 
             if (!$status['running']) {
-                # Exit the function.
-                return [
-                    "exit_code" => $status['exitcode'],
-                    "output" => $output,
-                ];
+                # Exit the loop.
+                break;
             }
-        }
-    }
 
+            $status = proc_get_status($process);
+        }
+
+        return [
+            'exit_code' => $status['exitcode'],
+            'output' => $output,
+        ];
+    }
 }
