@@ -12,10 +12,13 @@
         }
     ],
     "require": {
-        "nesbot/carbon": "1.*",
         "php": ">=5.4",
+        "nesbot/carbon": "1.*",
         "league/flysystem": "^1.0",
-        "swiftmailer/swiftmailer": "^5.4"
+        "swiftmailer/swiftmailer": "^5.4",
+        "aws/aws-sdk-php": "3.*",
+        "mustache/mustache": "2.*",
+        "erusev/parsedown": "1.*"
     },
     "require-dev": {
         "phpunit/phpunit": "5.4.*",
