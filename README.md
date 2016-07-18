@@ -2,4 +2,10 @@
 
 A set of code snippets, helper functions and libraries for reuse across projects.
 
-This project is evolving sporadically, with no guarantees of any kind.
+They are unit-tested and analysed with SensionLabsInsight. Backward compatibility is important when making changes, to make sure that they continue to work as expected through all projects.
+
+To use it in a project:
+
+```
+composer require brunodebarros/helpers dev-master
+```
