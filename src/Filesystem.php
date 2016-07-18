@@ -15,6 +15,7 @@ class Filesystem
      * Remove a directory even if it's not empty.
      *
      * @param string $dir
+     * @deprecated Use Flysystem instead.
      */
     public static function rrmdir($dir)
     {
