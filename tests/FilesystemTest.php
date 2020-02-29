@@ -1,9 +1,12 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
+use Brunodebarros\Helpers\Filesystem;
+
 /**
  * A PHPUnit test case for Filesystem.
  */
-class FilesystemTest extends PHPUnit_Framework_TestCase
+class FilesystemTest extends TestCase
 {
     /**
      * @var string A sample folder.
@@ -15,7 +18,7 @@ class FilesystemTest extends PHPUnit_Framework_TestCase
      */
     public $file;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->folder = FCPATH.'filesystem_test';
         $this->file = $this->folder.DIRECTORY_SEPARATOR.'test.txt';
@@ -23,7 +26,7 @@ class FilesystemTest extends PHPUnit_Framework_TestCase
         touch($this->file);
     }
 
-    public function tearDown()
+    protected function tearDown(): void
     {
         if (file_exists($this->file)) {
             unlink($this->file);
@@ -36,8 +39,8 @@ class FilesystemTest extends PHPUnit_Framework_TestCase
 
     public function testRrmdir()
     {
-        \Brunodebarros\Helpers\Filesystem::rrmdir($this->folder);
-        self::assertFalse(file_exists($this->folder));
-        self::assertFalse(file_exists($this->file));
+        Filesystem::rrmdir($this->folder);
+        self::assertFileNotExists($this->folder);
+        self::assertFileNotExists($this->file);
     }
 }

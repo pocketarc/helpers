@@ -1,9 +1,12 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
+use Brunodebarros\Helpers\Miscellaneous;
+
 /**
  * A PHPUnit test case for Miscellaneous.
  */
-class MiscellaneousTest extends PHPUnit_Framework_TestCase
+class MiscellaneousTest extends TestCase
 {
     public function testMultiTrySuccessOnFirstTry()
     {
@@ -14,7 +17,7 @@ class MiscellaneousTest extends PHPUnit_Framework_TestCase
             return true;
         };
 
-        $result = Brunodebarros\Helpers\Miscellaneous::multiTry($test, 3, 100);
+        $result = Miscellaneous::multiTry($test, 3, 100);
 
         self::assertTrue($result);
         self::assertEquals(1, $attempts);
@@ -28,7 +31,7 @@ class MiscellaneousTest extends PHPUnit_Framework_TestCase
             throw new Exception('Test Exception!', $attempts);
         };
 
-        $result = Brunodebarros\Helpers\Miscellaneous::multiTry($test, 3, 100);
+        $result = Miscellaneous::multiTry($test, 3, 100);
 
         self::assertInstanceOf('\\Exception', $result);
         self::assertEquals(3, $result->getCode());
@@ -47,7 +50,7 @@ class MiscellaneousTest extends PHPUnit_Framework_TestCase
             }
         };
 
-        $result = Brunodebarros\Helpers\Miscellaneous::multiTry($test, 3, 100);
+        $result = Miscellaneous::multiTry($test, 3, 100);
 
         self::assertTrue($result);
         self::assertEquals(3, $attempts);
@@ -65,7 +68,7 @@ class MiscellaneousTest extends PHPUnit_Framework_TestCase
             }
         };
 
-        $result = Brunodebarros\Helpers\Miscellaneous::multiTry($test, 3, 100);
+        $result = Miscellaneous::multiTry($test, 3, 100);
 
         self::assertTrue($result);
         self::assertEquals(3, $attempts);
