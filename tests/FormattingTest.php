@@ -1,9 +1,12 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
+use Brunodebarros\Helpers\Formatting;
+
 /**
  * A PHPUnit test case for Formatting.
  */
-class FormattingTest extends PHPUnit_Framework_TestCase
+class FormattingTest extends TestCase
 {
     public function testBytes()
     {
@@ -11,7 +14,7 @@ class FormattingTest extends PHPUnit_Framework_TestCase
 
         foreach ($units as $power => $expected_unit) {
             $value = 512 * pow(1024, $power);
-            self::assertEquals("512 $expected_unit", \Brunodebarros\Helpers\Formatting::bytes($value, 2));
+            self::assertEquals("512 $expected_unit", Formatting::bytes($value, 2));
         }
     }
 }
